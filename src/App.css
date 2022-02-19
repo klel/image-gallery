@@ -2,3 +2,8 @@
     margin: 0;
     padding: 0;
 }
+
+.img-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
