@@ -27,7 +27,14 @@ function App() {
     setCurrentQuery(q);
     setCurrentPage(1);
   }
-  const nextHandler = () => {
+
+  const setPage = (cb:Function) => {
+    if(currentPage <= 1){
+      return;
+    }
+    cb();
+  }
+  const nextHandler = (e:any) => {
     const next = currentPage + 1;
     setCurrentPage(next);
     api.search(currentQuery, next).then(data => {
@@ -35,21 +42,22 @@ function App() {
     });
   }
 
-  const prevHandler = () => {
+  const prevHandler = (e:any) => {
     const prev = currentPage - 1;
-    setCurrentPage(prev)
-    api.search(currentQuery, prev).then(data => {
-      setImages(data.results);
+    setPage(()=> {
+      setCurrentPage(prev)
+      api.search(currentQuery, prev).then(data => {
+        setImages(data.results);
+      });
     });
+
   }
 
   return (
     <div>
       <Search onChange={(e: any) => {
         updateImageContainer(e.target.value);
-      }} delay={1000}></Search>
-      <button onClick={prevHandler}>Prev</button>
-      <button onClick={nextHandler}>Next</button>
+      }} delay={1000} prevHandler={prevHandler} nextHandler={nextHandler}></Search>
       <div className='img-wrapper'>
         {images.map((i: ImageSummary): any => (<Image key={i.id} src={i.urls.regular} alt={i.alt_description}></Image>))}
       </div>

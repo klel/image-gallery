@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Api from '../Unsplash/Api';
+import styles from './Search.module.css';
 
 function Search(props:any) {
     const delay = props.delay ?? 500;
@@ -18,9 +18,11 @@ function Search(props:any) {
     };
 
     return (
-    <div>
+    <div className={styles.wrapper}>
         <label htmlFor="searchInputId">Search</label>
         <input onChange={onChange} type="text" name="search" id="searchInputId" />
+        <button className={styles.button} onClick={props.prevHandler}>Prev</button>
+        <button className={styles.button} onClick={props.nextHandler}>Next</button>
     </div>
     );
 }
